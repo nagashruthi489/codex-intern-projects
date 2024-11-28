@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="" />
+    <style>
+      body {
+        background-image: url("https://us.123rf.com/450wm/serezniy/serezniy2103/serezniy210344057/165892068-empty-to-do-list-with-pencil-on-white-background-closeup.jpg?ver=6");
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .container {
+        display: flexbox;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .container input {
+        flex: 1;
+        margin-right: 10px;
+      }
+
+      button {
+        padding: 8px 10px;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      li button {
+        margin-left: 10px;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+    <div class="container">
+      <input type="text" id="taskInput" placeholder="Enter a task" />
+      <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+    <script>
+      let tasks = [];
+
+      function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskList = document.getElementById("taskList");
+
+        if (taskInput.value !== "") {
+          tasks.push(taskInput.value);
+          displayArr();
+          taskInput.value = "";
+        }
+      }
+
+      function editTask(index) {
+        const newTask = prompt("Enter a new task:", tasks[index]);
+        if (newTask !== null) {
+          tasks[index] = newTask;
+          displayArr();
+        }
+      }
+
+      function deleteTask(index) {
+        tasks.splice(index, 1);
+        displayArr();
+      }
+
+      function displayArr() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = task;
+
+          const editButton = document.createElement("button");
+          editButton.textContent = "Edit";
+          editButton.addEventListener("click", () => editTask(index));
+
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "Delete";
+          deleteButton.addEventListener("click", () => deleteTask(index));
+
+          listItem.appendChild(editButton);
+          listItem.appendChild(deleteButton);
+
+          taskList.appendChild(listItem);
+        });
+      }
+    </script>
+  </body>
+</html>
